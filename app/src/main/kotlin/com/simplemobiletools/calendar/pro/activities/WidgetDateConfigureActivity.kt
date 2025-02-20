@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.simplemobiletools.calendar.pro.databinding.WidgetConfigDateBinding
 import com.simplemobiletools.calendar.pro.extensions.config
 import com.simplemobiletools.calendar.pro.helpers.Formatter
@@ -24,6 +25,7 @@ class WidgetDateConfigureActivity : SimpleActivity() {
     private val binding by viewBinding(WidgetConfigDateBinding::inflate)
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
         setResult(Activity.RESULT_CANCELED)

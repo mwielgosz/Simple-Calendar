@@ -7,7 +7,12 @@ import android.content.Intent
 import android.media.AudioManager
 import android.media.RingtoneManager
 import android.os.Bundle
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.simplemobiletools.calendar.pro.R
@@ -44,6 +49,7 @@ class SettingsActivity : SimpleActivity() {
     private val binding by viewBinding(ActivitySettingsBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -51,6 +57,18 @@ class SettingsActivity : SimpleActivity() {
 
         updateMaterialActivityViews(binding.settingsCoordinator, binding.settingsHolder, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsToolbar)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     override fun onResume() {

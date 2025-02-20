@@ -6,8 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.simplemobiletools.calendar.pro.R
 import com.simplemobiletools.calendar.pro.adapters.SelectTimeZoneAdapter
 import com.simplemobiletools.calendar.pro.databinding.ActivitySelectTimeZoneBinding
@@ -28,6 +33,7 @@ class SelectTimeZoneActivity : SimpleActivity() {
     private val binding by viewBinding(ActivitySelectTimeZoneBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupOptionsMenu()
@@ -46,6 +52,18 @@ class SelectTimeZoneActivity : SimpleActivity() {
         val pos = allTimeZones.indexOfFirst { it.zoneName.equals(currentTimeZone, true) }
         if (pos != -1) {
             binding.selectTimeZoneList.scrollToPosition(pos)
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
         }
     }
 

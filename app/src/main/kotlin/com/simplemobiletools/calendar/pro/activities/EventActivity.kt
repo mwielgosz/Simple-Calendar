@@ -17,10 +17,15 @@ import android.provider.ContactsContract.Data
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
@@ -86,6 +91,7 @@ class EventActivity : SimpleActivity() {
     private val binding by viewBinding(ActivityEventBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -118,6 +124,18 @@ class EventActivity : SimpleActivity() {
                     gotEvent(savedInstanceState, localEventType, event)
                 }
             }
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
         }
     }
 

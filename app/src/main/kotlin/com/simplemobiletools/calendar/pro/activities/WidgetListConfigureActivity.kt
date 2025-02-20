@@ -7,6 +7,11 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.simplemobiletools.calendar.pro.R
 import com.simplemobiletools.calendar.pro.adapters.EventListAdapter
 import com.simplemobiletools.calendar.pro.databinding.WidgetConfigListBinding
@@ -41,6 +46,7 @@ class WidgetListConfigureActivity : SimpleActivity() {
     private val binding by viewBinding(WidgetConfigListBinding::inflate)
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
         setResult(Activity.RESULT_CANCELED)
@@ -74,6 +80,18 @@ class WidgetListConfigureActivity : SimpleActivity() {
         }
 
         updateSelectedPeriod(config.lastUsedEventSpan)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     private fun initVariables() {

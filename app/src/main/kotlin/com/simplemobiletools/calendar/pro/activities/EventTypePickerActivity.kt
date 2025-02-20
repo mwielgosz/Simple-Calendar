@@ -1,6 +1,7 @@
 package com.simplemobiletools.calendar.pro.activities
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.simplemobiletools.calendar.pro.R
 import com.simplemobiletools.calendar.pro.extensions.launchNewEventIntent
@@ -13,6 +14,7 @@ class EventTypePickerActivity : AppCompatActivity() {
     private val TYPE_TASK = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val items = arrayListOf(
             RadioItem(TYPE_EVENT, getString(R.string.event)),

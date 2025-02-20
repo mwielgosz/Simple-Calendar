@@ -1,6 +1,11 @@
 package com.simplemobiletools.calendar.pro.activities
 
 import android.os.Bundle
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.simplemobiletools.calendar.pro.R
 import com.simplemobiletools.calendar.pro.adapters.ManageEventTypesAdapter
 import com.simplemobiletools.calendar.pro.databinding.ActivityManageEventTypesBinding
@@ -19,6 +24,7 @@ class ManageEventTypesActivity : SimpleActivity(), DeleteEventTypesListener {
     private val binding by viewBinding(ActivityManageEventTypesBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -34,6 +40,18 @@ class ManageEventTypesActivity : SimpleActivity(), DeleteEventTypesListener {
 
         getEventTypes()
         updateTextColors(binding.manageEventTypesList)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     override fun onResume() {

@@ -10,7 +10,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.simplemobiletools.calendar.pro.databinding.DayMonthlyNumberViewBinding
 import com.simplemobiletools.calendar.pro.databinding.TopNavigationBinding
 import com.simplemobiletools.calendar.pro.databinding.WidgetConfigMonthlyBinding
@@ -40,6 +45,7 @@ class WidgetMonthlyConfigureActivity : SimpleActivity(), MonthlyCalendar {
     private val topNavigationBinding by lazy { TopNavigationBinding.bind(binding.root) }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
         setResult(Activity.RESULT_CANCELED)
@@ -59,6 +65,18 @@ class WidgetMonthlyConfigureActivity : SimpleActivity(), MonthlyCalendar {
             configBgColor.setOnClickListener { pickBackgroundColor() }
             configTextColor.setOnClickListener { pickTextColor() }
             configBgSeekbar.setColors(mTextColor, primaryColor, primaryColor)
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
         }
     }
 

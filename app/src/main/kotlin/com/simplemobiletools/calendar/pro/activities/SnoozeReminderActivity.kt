@@ -1,6 +1,7 @@
 package com.simplemobiletools.calendar.pro.activities
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.simplemobiletools.calendar.pro.extensions.config
 import com.simplemobiletools.calendar.pro.extensions.eventsDB
@@ -11,6 +12,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 
 class SnoozeReminderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         showPickSecondsDialogHelper(config.snoozeTime, true, cancelCallback = { dialogCancelled() }) {

@@ -5,8 +5,13 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
+import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.simplemobiletools.calendar.pro.R
@@ -51,6 +56,7 @@ class TaskActivity : SimpleActivity() {
     private val binding by viewBinding(ActivityTaskBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -82,6 +88,18 @@ class TaskActivity : SimpleActivity() {
                     gotTask(savedInstanceState, localEventType, task)
                 }
             }
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
         }
     }
 

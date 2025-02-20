@@ -12,7 +12,12 @@ import android.provider.ContactsContract.CommonDataKinds
 import android.provider.ContactsContract.Contacts
 import android.provider.ContactsContract.Data
 import android.view.MenuItem
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.simplemobiletools.calendar.pro.BuildConfig
 import com.simplemobiletools.calendar.pro.R
 import com.simplemobiletools.calendar.pro.adapters.EventListAdapter
@@ -78,6 +83,7 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
     private val binding by viewBinding(ActivityMainBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         appLaunched(BuildConfig.APPLICATION_ID)
@@ -158,6 +164,18 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
         addImportIdsToTasks {
             refreshViewPager()
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = insets.top
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
         }
     }
 
