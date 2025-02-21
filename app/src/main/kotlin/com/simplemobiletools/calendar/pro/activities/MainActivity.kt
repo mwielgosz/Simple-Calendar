@@ -287,7 +287,6 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
                 R.id.add_holidays -> addHolidays()
                 R.id.add_birthdays -> tryAddBirthdays()
                 R.id.add_anniversaries -> tryAddAnniversaries()
-                R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
                 R.id.settings -> launchSettings()
                 R.id.about -> launchAbout()
                 else -> return@setOnMenuItemClickListener false
